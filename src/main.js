@@ -45,17 +45,42 @@ if (!proxyConfiguration?.useApifyProxy) {
 
 // Persisted across retries/migrations: dedupe set + accepted-job counter.
 // "planned" counts every job accepted (pushed, or queued for its detail page),
-// so maxItems is respected exactly once per job.
-const state = await Actor.useState('linkedin-jobs-state', { seenIds: [], planned: 0, saved: 0 });
+// so maxItems is respected exactly once per job. trafficBytes/trafficUnits meter
+// Apify Proxy usage for the proxy-traffic charge (1 unit = 100 KB).
+const state = await Actor.useState('linkedin-jobs-state', {
+    seenIds: [], planned: 0, saved: 0, trafficBytes: 0, trafficUnits: 0,
+});
 const seen = new Set(state.seenIds);
 
-const chargeJob = async () => {
-    // Pay-per-event: charge only for jobs actually saved. No-op unless the Actor
-    // is on PAY_PER_EVENT pricing with a "job" event configured.
+// Pricing (single plan, same for everyone — PAY_PER_EVENT):
+//   result        $0.003 per job saved            ($3.00 / 1,000 results)
+//   proxy-traffic $0.0008 per 100 KB through Apify Proxy ($0.80 / 1,000 units)
+//   apify-actor-start $0.00005 — charged by the platform at run start, not in code.
+const proxyEnabled = Boolean(proxyConfiguration?.useApifyProxy);
+
+const chargeResult = async () => {
+    // Charge only for jobs actually saved to the dataset.
     try {
-        await Actor.charge({ eventName: 'job', count: 1 });
+        await Actor.charge({ eventName: 'result', count: 1 });
     } catch (err) {
         log.debug(`Charge skipped: ${err.message}`);
+    }
+};
+
+// Approximate proxy traffic from response bodies and charge each full 100 KB.
+// Only metered when the run actually goes through Apify Proxy.
+const meterTraffic = async (bytes) => {
+    if (!proxyEnabled || !bytes) return;
+    state.trafficBytes += bytes;
+    const units = Math.floor(state.trafficBytes / 102400);
+    const diff = units - state.trafficUnits;
+    if (diff > 0) {
+        state.trafficUnits = units;
+        try {
+            await Actor.charge({ eventName: 'proxy-traffic', count: diff });
+        } catch (err) {
+            log.debug(`Proxy-traffic charge skipped: ${err.message}`);
+        }
     }
 };
 
@@ -67,6 +92,7 @@ const crawler = new CheerioCrawler({
     // LinkedIn answers abuse with 429; Crawlee retries with fresh sessions/proxies.
     async requestHandler({ request, body, crawler: cr }) {
         const { label } = request.userData;
+        await meterTraffic(body?.length || 0);
 
         if (label === 'DETAIL') {
             const { job, searchUrl } = request.userData;
@@ -79,7 +105,7 @@ const crawler = new CheerioCrawler({
             }
             await Dataset.pushData(item);
             state.saved += 1;
-            await chargeJob();
+            await chargeResult();
             log.info(`Saved ${state.saved}: ${item.title || item.id} @ ${item.companyName || '?'}`);
             return;
         }
@@ -107,7 +133,7 @@ const crawler = new CheerioCrawler({
             } else {
                 await Dataset.pushData(toDatasetItem(job, request.userData.searchUrl));
                 state.saved += 1;
-                await chargeJob();
+                await chargeResult();
                 log.info(`Saved ${state.saved}/${maxItems}: ${job.title || job.id} @ ${job.companyName || '?'}`);
             }
         }
@@ -136,7 +162,7 @@ const crawler = new CheerioCrawler({
             const { job, searchUrl } = request.userData;
             await Dataset.pushData(toDatasetItem(job, searchUrl));
             state.saved += 1;
-            await chargeJob();
+            await chargeResult();
             log.warning(`Saved card-only fallback for job ${job.id} after detail failure.`);
         }
     },
