@@ -1,1 +1,192 @@
-{"actorSpecification":1,"views":{"overview":{"display":{"properties":{"applicantsText":{"format":"text","label":"Applicants"},"companyName":{"format":"text","label":"Company"},"employmentType":{"format":"text","label":"Type"},"id":{"format":"text","label":"Job ID"},"jobUrl":{"format":"link","label":"Job URL"},"location":{"format":"text","label":"Location"},"postedAtText":{"format":"text","label":"Posted"},"seniorityLevel":{"format":"text","label":"Level"},"title":{"format":"text","label":"Title"}}},"title":"LinkedIn jobs","transformation":{"fields":["id","title","companyName","location","jobUrl","postedAtText","employmentType","seniorityLevel","applicantsText"]}}}}
+{
+  "actorSpecification": 1,
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "title": "Job ID",
+        "description": "LinkedIn job posting ID."
+      },
+      "title": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Title",
+        "description": "Job title."
+      },
+      "companyName": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Company",
+        "description": "Company name."
+      },
+      "companyUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Company URL",
+        "description": "LinkedIn company page URL."
+      },
+      "companyLogo": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Company logo",
+        "description": "Company logo image URL."
+      },
+      "location": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Location",
+        "description": "Job location as shown by LinkedIn."
+      },
+      "jobUrl": {
+        "type": "string",
+        "title": "Job URL",
+        "description": "LinkedIn job page URL."
+      },
+      "applyUrl": {
+        "type": "string",
+        "title": "Apply URL",
+        "description": "Offsite apply link when LinkedIn exposes one, otherwise the job page URL."
+      },
+      "postedAtText": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Posted",
+        "description": "Relative posted date text, e.g. '2 days ago'."
+      },
+      "postedAt": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Posted date",
+        "description": "Posted date (YYYY-MM-DD) when shown."
+      },
+      "applicantsText": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Applicants",
+        "description": "Applicant count text, e.g. '37 applicants'."
+      },
+      "salaryText": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Salary",
+        "description": "Salary info when LinkedIn shows it."
+      },
+      "seniorityLevel": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Seniority level",
+        "description": "Seniority level from the job criteria."
+      },
+      "employmentType": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Employment type",
+        "description": "Employment type from the job criteria."
+      },
+      "jobFunction": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Job function",
+        "description": "Job function from the job criteria."
+      },
+      "industries": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Industries",
+        "description": "Industries from the job criteria."
+      },
+      "descriptionText": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Description",
+        "description": "Full job description as plain text."
+      },
+      "descriptionHtml": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Description HTML",
+        "description": "Full job description as HTML."
+      },
+      "searchUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Search URL",
+        "description": "The search this job came from."
+      },
+      "scrapedAt": {
+        "type": "string",
+        "title": "Scraped at",
+        "description": "ISO timestamp of when the job was scraped."
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "LinkedIn jobs",
+      "transformation": {
+        "fields": [
+          "id",
+          "title",
+          "companyName",
+          "location",
+          "jobUrl",
+          "postedAtText",
+          "employmentType",
+          "seniorityLevel",
+          "applicantsText"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "jobUrl": {
+            "format": "link"
+          },
+          "applyUrl": {
+            "format": "link"
+          },
+          "companyUrl": {
+            "format": "link"
+          },
+          "companyLogo": {
+            "format": "image"
+          }
+        }
+      }
+    }
+  }
+}

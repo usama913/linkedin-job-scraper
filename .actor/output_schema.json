@@ -1,0 +1,1 @@
+{"actorOutputSchemaVersion":1,"description":"LinkedIn jobs scraped by the run, stored in the default dataset.","properties":{"results":{"description":"Job records from the run.","template":"{{links.apiDefaultDatasetUrl}}/items","title":"Scraped jobs","type":"string"}},"title":"LinkedIn Job Scraper output"}
