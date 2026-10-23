@@ -77,11 +77,11 @@ Two plans only — **Starter** and **Business**. There is **no free plan** for t
 
 | Charge | Starter | Business | When |
 |---|---|---|---|
-| **Result** (`result`) | **$3.00 / 1,000 results** ($0.003 per job) | **$3.00 / 1,000 results** ($0.003 per job) | For every job actually saved to the dataset. Duplicates and failed jobs are never charged. |
+| **Result** (`result`) | **$3.00 / 1,000 results** ($0.003 per job) | **$2.00 / 1,000 results** ($0.002 per job) | For every job actually saved to the dataset. Duplicates and failed jobs are never charged. |
 | **Apify Proxy traffic** (`proxy-traffic`) | $0.80 / 1,000 units ($0.0008 per 100 KB) | $0.80 / 1,000 units ($0.0008 per 100 KB) | Per 100 KB of traffic through Apify Proxy, metered from the responses the Actor downloads. Only charged when Apify Proxy is used. |
 | **Actor start** (`apify-actor-start`) | $0.00005 | $0.00005 | Once per run start (per GB of memory), charged by Apify. |
 
-Example: 1,000 jobs with full details ≈ $3.00 in results + roughly $1–2 of proxy traffic + $0.00005 start.
+Example: 1,000 jobs with full details ≈ $3.00 in results on Starter ($2.00 on Business) + roughly $1–2 of proxy traffic + $0.00005 start.
 
 ## Tips
 
