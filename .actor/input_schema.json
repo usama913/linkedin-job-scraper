@@ -156,12 +156,15 @@
           "url": {
             "type": "string",
             "title": "URL",
-            "editor": "textfield"
+            "description": "URL of the LinkedIn Jobs search page.",
+            "editor": "textfield",
+            "prefill": "https://www.linkedin.com/jobs/search/?keywords=software%20engineer&location=United%20States"
           }
         },
         "required": [
           "url"
-        ]
+        ],
+        "description": "A LinkedIn Jobs search page to scrape."
       },
       "prefill": [],
       "title": "LinkedIn Jobs search URLs (optional)",
