@@ -162,8 +162,7 @@
         },
         "required": [
           "url"
-        ],
-        "description": "A LinkedIn Jobs search page to scrape."
+        ]
       },
       "prefill": [],
       "title": "LinkedIn Jobs search URLs (optional)",
