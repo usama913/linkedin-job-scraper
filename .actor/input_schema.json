@@ -151,7 +151,6 @@
       "example": [],
       "items": {
         "type": "object",
-        "title": "LinkedIn Jobs search URL",
         "properties": {
           "url": {
             "type": "string",
