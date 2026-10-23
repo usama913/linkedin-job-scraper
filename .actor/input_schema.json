@@ -156,7 +156,6 @@
             "type": "string",
             "title": "URL",
             "description": "URL of the LinkedIn Jobs search page.",
-            "editor": "textfield",
             "prefill": "https://www.linkedin.com/jobs/search/?keywords=software%20engineer&location=United%20States"
           }
         },
