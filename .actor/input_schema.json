@@ -150,12 +150,18 @@
       "editor": "requestListSources",
       "example": [],
       "items": {
+        "type": "object",
+        "title": "LinkedIn Jobs search URL",
         "properties": {
           "url": {
-            "type": "string"
+            "type": "string",
+            "title": "URL",
+            "editor": "textfield"
           }
         },
-        "type": "object"
+        "required": [
+          "url"
+        ]
       },
       "prefill": [],
       "title": "LinkedIn Jobs search URLs (optional)",
