@@ -52,8 +52,8 @@ const state = await Actor.useState('linkedin-jobs-state', {
 });
 const seen = new Set(state.seenIds);
 
-// Pricing (single plan, same for everyone — PAY_PER_EVENT):
-//   result        $0.003 per job saved            ($3.00 / 1,000 results)
+// Pricing (two plans only — Starter and Business, NO free plan; PAY_PER_EVENT):
+//   result        $0.003 per job saved on both plans ($3.00 / 1,000 results)
 //   proxy-traffic $0.0008 per 100 KB through Apify Proxy ($0.80 / 1,000 units)
 //   apify-actor-start $0.00005 — charged by the platform at run start, not in code.
 const proxyEnabled = Boolean(proxyConfiguration?.useApifyProxy);
